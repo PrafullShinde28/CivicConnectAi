@@ -1,0 +1,82 @@
+🚀 SIH Prototype Prompt – Civic Issue Reporting with AI + APIs
+
+Problem Statement:
+Local citizens face difficulty reporting civic issues like potholes, garbage overflow, or broken streetlights due to lack of proper tools. Many people also don’t have smartphones, which limits participation. We need a solution that works across images, voice, and toll-free calls, while ensuring ease of reporting and real-time government response.
+
+Prototype Goal:
+Build a mobile-first and web-based system where citizens can:
+
+Upload a photo of the issue → AI automatically detects (pothole, garbage, streetlight, etc.), attaches GPS + timestamp, and generates a short description.
+
+Report issues by voice command → Voice converted to text (in local languages like Hindi/Marathi/English) and categorized automatically.
+
+Call a toll-free IVR number (for non-smartphone users) → Speech-to-text converts their description into a report.
+
+Track issue status (submitted → acknowledged → resolved) in real time.
+
+AI & API Integration Plan:
+
+Image Recognition
+
+Use Google Cloud Vision API / Azure Custom Vision / AWS Rekognition.
+
+Detect issue type (pothole, garbage, streetlight).
+
+Extract GPS + timestamp from image metadata (EXIF).
+
+Generate issue description automatically.
+
+Voice Input (Smartphone Users)
+
+Use Google Speech-to-Text API or OpenAI Whisper API.
+
+Convert spoken description into text.
+
+Classify keywords → Map to issue type.
+
+Toll-Free Number (Non-Smartphone Users)
+
+Use Twilio / Exotel IVR system.
+
+Citizen speaks issue → Recorded → Sent to Speech-to-Text API.
+
+AI processes text, attaches call metadata (time/location if caller ID is mapped to region).
+
+Backend & Dashboard
+
+Node.js + Express backend with REST APIs.
+
+PostgreSQL/MySQL database for storing reports.
+
+Admin Dashboard (React) for government staff:
+
+Filter by issue type, location, priority.
+
+Assign issues to departments.
+
+Track SLA & resolution time.
+
+Notifications
+
+Citizen gets SMS/WhatsApp/app notification at each stage.
+
+Admin updates reflect instantly on user dashboard.
+
+Future Enhancements
+
+Blockchain for tamper-proof issue logs (privacy & accountability).
+
+ML severity ranking (e.g., “major pothole vs minor”).
+
+Integration with CCTV feeds for automatic detection.
+
+Expected Outcome:
+A working prototype where:
+
+A citizen can take a photo OR use voice OR call toll-free.
+
+AI/ML + APIs process the input into a structured civic report.
+
+Government staff see it on a live map dashboard with filters.
+
+Citizens can track the resolution progress in real-time.
