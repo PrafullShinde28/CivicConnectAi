@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { analyzeIssueImage, transcribeAudio, extractIssueFromText } from "./openai";
-import { insertIssueSchema, insertIssueCommentSchema } from "@shared/schema";
+import { insertIssueSchema, insertIssueCommentSchema, insertDepartmentSchema } from "@shared/schema";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -221,6 +221,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching departments:", error);
       res.status(500).json({ message: "Failed to fetch departments" });
+    }
+  });
+
+  // Create department
+  app.post("/api/departments", async (req, res) => {
+    try {
+      const departmentData = {
+        name: req.body.name,
+        description: req.body.description,
+        contactEmail: req.body.contactEmail,
+        contactPhone: req.body.contactPhone,
+        isActive: req.body.isActive !== undefined ? req.body.isActive : true,
+      };
+
+      const validatedData = insertDepartmentSchema.parse(departmentData);
+      const newDepartment = await storage.createDepartment(validatedData);
+      
+      res.status(201).json(newDepartment);
+    } catch (error) {
+      console.error("Error creating department:", error);
+      res.status(500).json({ message: "Failed to create department", error: (error as Error).message });
     }
   });
 
