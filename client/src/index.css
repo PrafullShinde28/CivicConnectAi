@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(210, 40%, 98%);
+  --foreground: hsl(222, 13%, 13%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222, 13%, 13%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222, 13%, 13%);
+  --primary: hsl(210, 83%, 53%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(120, 40%, 45%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 13%, 45%);
+  --accent: hsl(36, 100%, 50%);
+  --accent-foreground: hsl(222, 13%, 13%);
+  --destructive: hsl(0, 63%, 31%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --ring: hsl(210, 83%, 53%);
+  --radius: 8px;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+}
+
+.dark {
+  --background: hsl(224, 25%, 8%);
+  --foreground: hsl(213, 31%, 91%);
+  --card: hsl(224, 25%, 11%);
+  --card-foreground: hsl(213, 31%, 91%);
+  --popover: hsl(224, 25%, 11%);
+  --popover-foreground: hsl(213, 31%, 91%);
+  --primary: hsl(210, 83%, 53%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(120, 40%, 45%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --muted: hsl(223, 24%, 15%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --accent: hsl(36, 100%, 50%);
+  --accent-foreground: hsl(224, 25%, 8%);
+  --destructive: hsl(0, 63%, 31%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(223, 24%, 15%);
+  --input: hsl(223, 24%, 15%);
+  --ring: hsl(210, 83%, 53%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Recording pulse animation */
+@keyframes recording-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.recording-pulse {
+  animation: recording-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Map marker hover effect */
+.map-marker {
+  transition: transform 0.2s ease;
+}
+
+.map-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Status-specific colors */
+.status-pending { 
+  color: hsl(36, 100%, 50%); 
+}
+
+.status-acknowledged { 
+  color: hsl(210, 83%, 53%); 
+}
+
+.status-resolved { 
+  color: hsl(120, 40%, 45%); 
+}
+
+.status-urgent { 
+  color: hsl(0, 63%, 31%); 
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
