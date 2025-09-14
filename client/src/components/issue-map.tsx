@@ -134,28 +134,33 @@ export default function IssueMap() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
             
             {/* Map Markers */}
-            {issues && issues.slice(0, 8).map((issue: any, index: number) => {
-              const positions = [
-                { top: "20%", left: "25%" },
-                { top: "40%", left: "45%" },
-                { top: "30%", right: "35%" },
-                { top: "60%", left: "30%" },
-                { top: "70%", right: "25%" },
-                { top: "25%", right: "20%" },
-                { top: "50%", left: "60%" },
-                { top: "80%", left: "50%" },
-              ];
+            {issues && issues.filter((issue: any) => issue.latitude && issue.longitude).map((issue: any) => {
+              // Convert GPS coordinates to map position
+              // Using a simple mapping for demonstration - in production, you'd use proper map projection
+              const mapBounds = {
+                minLat: 18.4, // Mumbai south
+                maxLat: 19.3, // Mumbai north
+                minLng: 72.7, // Mumbai west
+                maxLng: 73.1, // Mumbai east
+              };
+              
+              // Convert lat/lng to percentage position on the map
+              const latPercent = ((issue.latitude - mapBounds.minLat) / (mapBounds.maxLat - mapBounds.minLat)) * 100;
+              const lngPercent = ((issue.longitude - mapBounds.minLng) / (mapBounds.maxLng - mapBounds.minLng)) * 100;
+              
+              // Clamp to map bounds and flip Y axis (lat decreases as we go up)
+              const top = Math.max(5, Math.min(95, 95 - latPercent));
+              const left = Math.max(5, Math.min(95, lngPercent));
               
               return (
                 <div
                   key={issue.id}
-                  className={`absolute cursor-pointer transform hover:scale-110 transition-transform ${positions[index]?.top ? `top-[${positions[index].top}]` : ""} ${positions[index]?.left ? `left-[${positions[index].left}]` : ""} ${positions[index]?.right ? `right-[${positions[index].right}]` : ""}`}
+                  className="absolute cursor-pointer transform hover:scale-110 transition-transform"
                   style={{
-                    top: positions[index]?.top,
-                    left: positions[index]?.left,
-                    right: positions[index]?.right,
+                    top: `${top}%`,
+                    left: `${left}%`,
                   }}
-                  title={`${issue.title} - ${issue.status}`}
+                  title={`${issue.title} - ${issue.status} (${issue.latitude?.toFixed(4)}, ${issue.longitude?.toFixed(4)})`}
                   data-testid={`map-marker-${issue.id}`}
                 >
                   <div className={`w-6 h-6 ${getMarkerColor(issue.status)} rounded-full border-2 border-background shadow-lg flex items-center justify-center text-xs font-bold text-white`}>
